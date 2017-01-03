@@ -66,6 +66,10 @@ export default class WordSlider {
 		this._startTime = Date.now();
 		this._currentText = 0;
 		this._currentTime = 0;
+		this._currentSpeed = TIME_BETWEEN_TEXTS;
+		for ( let i = 0; i < this._textArr.length; i++ ) {
+			this._textArr[ i ].setDuration( this._currentSpeed );
+		}
 		this._textArr[ this._currentText ].start();
 	}
 
@@ -76,10 +80,13 @@ export default class WordSlider {
 				this._currentText = ( this._currentText + 1 === WORD_LIST.length ? 0 : this._currentText + 1 );
 				this._textArr[ this._currentText ].start();
 			}
+
 			this._currentTime += timeDelta;
+
 			if ( this._startDecreasingSpeed ) {
 				this._currentSpeed = this._currentSpeed >= FINAL_SPEED ? FINAL_SPEED : this._currentSpeed + DECREASE_SPEED;
 			}
+
 			for ( let i = 0; i < this._textArr.length; i++ ) {
 				let text = this._textArr[ i ];
 				if ( this._startDecreasingSpeed ) {
@@ -92,7 +99,9 @@ export default class WordSlider {
 				this._startDecreasingSpeed = false;
 				this._isActive = false;
 				alert( this._textArr[ this._currentText ]._text );
+				this.start();
 			}
+
 		}
 		this._currentTimeStamp = timestamp;
 	}

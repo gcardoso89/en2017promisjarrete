@@ -166,6 +166,10 @@
 				this._startTime = Date.now();
 				this._currentText = 0;
 				this._currentTime = 0;
+				this._currentSpeed = TIME_BETWEEN_TEXTS;
+				for (var i = 0; i < this._textArr.length; i++) {
+					this._textArr[i].setDuration(this._currentSpeed);
+				}
 				this._textArr[this._currentText].start();
 			}
 		}, {
@@ -177,10 +181,13 @@
 						this._currentText = this._currentText + 1 === WORD_LIST.length ? 0 : this._currentText + 1;
 						this._textArr[this._currentText].start();
 					}
+	
 					this._currentTime += timeDelta;
+	
 					if (this._startDecreasingSpeed) {
 						this._currentSpeed = this._currentSpeed >= FINAL_SPEED ? FINAL_SPEED : this._currentSpeed + DECREASE_SPEED;
 					}
+	
 					for (var i = 0; i < this._textArr.length; i++) {
 						var text = this._textArr[i];
 						if (this._startDecreasingSpeed) {
@@ -193,6 +200,7 @@
 						this._startDecreasingSpeed = false;
 						this._isActive = false;
 						alert(this._textArr[this._currentText]._text);
+						this.start();
 					}
 				}
 				this._currentTimeStamp = timestamp;
@@ -268,7 +276,7 @@
 			this._canvas.height = _constants.CANVAS_DIMENSIONS.height * _constants.PIXEL_RATIO;
 			this._ctx = this._canvas.getContext('2d');
 			this._ctx.setTransform(_constants.PIXEL_RATIO, 0, 0, _constants.PIXEL_RATIO, 0, 0);
-			this._ctx.font = this._options.fontSize + "px ArialBlack";
+			this._ctx.font = "normal normal 900 " + this._options.fontSize + "px 'Source Sans Pro'";
 			this._ctx.textAlign = 'center';
 			this._ctx.textBaseline = 'middle';
 			this._ctx.imageSmoothingEnabled = true;

@@ -24,7 +24,7 @@ export default class Text {
 		this._canvas.height = CANVAS_DIMENSIONS.height * PIXEL_RATIO;
 		this._ctx = this._canvas.getContext( '2d' );
 		this._ctx.setTransform( PIXEL_RATIO, 0, 0, PIXEL_RATIO, 0, 0 );
-		this._ctx.font = `${this._options.fontSize}px ArialBlack`;
+		this._ctx.font = `normal normal 900 ${this._options.fontSize}px 'Source Sans Pro'`;
 		this._ctx.textAlign = 'center';
 		this._ctx.textBaseline = 'middle';
 		this._ctx.imageSmoothingEnabled = true;

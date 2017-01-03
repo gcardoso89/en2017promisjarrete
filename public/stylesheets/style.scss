@@ -1,8 +1,9 @@
 @import "compass/css3";
+@import "../../node_modules/normalize-compass/normalize";
+
 
 body {
-	padding: 50px;
-	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	font: 100% 'Source Sans Pro', sans-serif;
 }
 
 a {
