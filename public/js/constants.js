@@ -6,11 +6,11 @@ export const PIXEL_RATIO = (function () {
 			ctx.msBackingStorePixelRatio ||
 			ctx.oBackingStorePixelRatio ||
 			ctx.backingStorePixelRatio || 1;
-
 	return dpr / bsr;
+
 })();
 
 export const CANVAS_DIMENSIONS = {
-	width: 300,
-	height: 100
+	width: 560,
+	height: 960
 };

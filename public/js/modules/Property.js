@@ -14,6 +14,7 @@ export default class Property {
 		this._elapsed = 0;
 		this._currentDirection = this._animOptions.direction;
 		this._currentValue = this._animOptions.start;
+		this._currentDuration = this._animOptions.duration;
 	}
 
 	update( timeDelta ) {
@@ -33,11 +34,14 @@ export default class Property {
 		return this._currentValue;
 	}
 
-	_tick( timeDelta ) {
-		let options = this._animOptions;
+	setDuration( duration ){
+		this._currentDuration = duration;
+	}
 
+	_tick( timeDelta ) {
 		let value;
-		let { start, end, duration, loop, reverseLoop } = options;
+		let duration = this._currentDuration;
+		let { start, end, loop, reverseLoop } = this._animOptions;
 
 		this._elapsed += timeDelta;
 		value = ( end - start ) * ( this._elapsed / duration );

@@ -126,10 +126,14 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var WORD_LIST = ['Ricardo', 'Lorem', 'Junior', 'Gordinho', 'Gonçalo', 'Amilcar', 'Branquinha', 'Ivone', 'Igor'];
+	var WORD_LIST = ['DETTE', 'CIGARETTES', 'SERRE-TETE', 'BILLE EN TÊTE', 'CAFET', 'BAGUETTE', 'PETE', 'COUETTE', 'RACLETTE', 'RIME EN ETTE', 'LUNETTES', 'J’ARRETE', 'FACETTE', 'INTERNET', 'TRINQUETTE', 'CACHETTE', 'CHANSONETTE', 'CHARETTE', 'CHEMISETTE', 'COURBETTE', 'DISQUETTE', 'OUBLIETTES', 'POMPETTE', 'CHAUSSETTES', 'TROTINETTE', 'EPAULETTES', 'COMÈTE', 'PAILLETTE', 'FETE'];
 	
-	var TIME_BETWEEN_TEXTS = 500;
-	var OVERLAP_TIME_TEXTS = 300;
+	var TIME_BETWEEN_TEXTS = 100;
+	var OVERLAP_TIME_TEXTS = 10;
+	
+	var DELAY_DURATION = 6000;
+	var FINAL_SPEED = 1000;
+	var DECREASE_SPEED = 1.1;
 	
 	var WordSlider = function () {
 		function WordSlider() {
@@ -139,10 +143,23 @@
 			this._startTime = null;
 			this._currentText = 0;
 			this._currentTime = 0;
+			this._currentSpeed = TIME_BETWEEN_TEXTS;
+			this._startDecreasingSpeed = null;
+			this._currentTimeStamp = null;
+	
 			this._textArr = WordSlider.createTextArray();
+			this._button = document.getElementById('stop-slider');
+	
+			this._button.addEventListener('click', this._stopSlider.bind(this));
 		}
 	
 		_createClass(WordSlider, [{
+			key: '_stopSlider',
+			value: function _stopSlider(e) {
+				e.preventDefault();
+				this._startDecreasingSpeed = this._currentTimeStamp;
+			}
+		}, {
 			key: 'start',
 			value: function start() {
 				this._isActive = true;
@@ -155,16 +172,30 @@
 			key: 'update',
 			value: function update(timeDelta, timestamp) {
 				if (this._isActive) {
-					if (this._currentTime >= TIME_BETWEEN_TEXTS) {
+					if (this._currentTime >= this._currentSpeed) {
 						this._currentTime = 0;
 						this._currentText = this._currentText + 1 === WORD_LIST.length ? 0 : this._currentText + 1;
 						this._textArr[this._currentText].start();
 					}
 					this._currentTime += timeDelta;
+					if (this._startDecreasingSpeed) {
+						this._currentSpeed = this._currentSpeed >= FINAL_SPEED ? FINAL_SPEED : this._currentSpeed + DECREASE_SPEED;
+					}
 					for (var i = 0; i < this._textArr.length; i++) {
-						this._textArr[i].update(timeDelta, timestamp);
+						var text = this._textArr[i];
+						if (this._startDecreasingSpeed) {
+							text.setDuration(this._currentSpeed);
+						}
+						text.update(timeDelta, timestamp);
+					}
+	
+					if (this._startDecreasingSpeed && timestamp - this._startDecreasingSpeed > DELAY_DURATION) {
+						this._startDecreasingSpeed = false;
+						this._isActive = false;
+						alert(this._textArr[this._currentText]._text);
 					}
 				}
+				this._currentTimeStamp = timestamp;
 			}
 		}, {
 			key: 'draw',
@@ -219,7 +250,8 @@
 	};
 	
 	var DEFAULT_OPTIONS = {
-		animDuration: 1000
+		animDuration: 1000,
+		fontSize: 50
 	};
 	
 	var Text = function () {
@@ -235,17 +267,21 @@
 			this._canvas.width = _constants.CANVAS_DIMENSIONS.width * _constants.PIXEL_RATIO;
 			this._canvas.height = _constants.CANVAS_DIMENSIONS.height * _constants.PIXEL_RATIO;
 			this._ctx = this._canvas.getContext('2d');
-			this._ctx.font = "40px/1.0 ArialBlack";
-			this._ctx.lineJoin = 'miter';
-			this._ctx.miterLimit = 10;
+			this._ctx.setTransform(_constants.PIXEL_RATIO, 0, 0, _constants.PIXEL_RATIO, 0, 0);
+			this._ctx.font = this._options.fontSize + "px ArialBlack";
 			this._ctx.textAlign = 'center';
-			this._ctx.textBaseline = 'alphabetic';
-	
+			this._ctx.textBaseline = 'middle';
+			this._ctx.imageSmoothingEnabled = true;
 			this._textWidth = _constants.CANVAS_DIMENSIONS.width;
 	
+			this._currentDuration = this._options.animDuration;
+	
+			this._offsetX = this._textWidth / 2;
+			this._offsetY = _constants.CANVAS_DIMENSIONS.height / 2;
+	
 			this._isActive = false;
-			this._opacity = new _Property2.default({ reverseLoop: true, loop: true, duration: this._options.animDuration / 2 });
-			this._scale = new _Property2.default({ start: 0, duration: this._options.animDuration });
+			this._opacity = new _Property2.default({ start: 0.5, duration: this._options.animDuration });
+			this._scale = new _Property2.default({ start: 0.9, duration: this._options.animDuration });
 		}
 	
 		_createClass(Text, [{
@@ -262,7 +298,7 @@
 				if (this._isActive) {
 					this._startTime = this._startTime || timestamp;
 					this._currentTime += timeDelta;
-					if (this._currentTime > this._options.animDuration) {
+					if (this._currentTime > this._currentDuration) {
 						this._isActive = false;
 						this._currentTime = 0;
 					}
@@ -274,18 +310,24 @@
 			key: "draw",
 			value: function draw(ctx) {
 				if (this._isActive) {
-					var scale = this._scale.getCurrentValue();
-	
+					//let scale = this._scale.getCurrentValue();
 					this._ctx.save();
-					this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
-					this._ctx.translate(this._textWidth, 80);
-					this._ctx.scale(_constants.PIXEL_RATIO * scale, _constants.PIXEL_RATIO * scale);
-					this._ctx.translate(0, 12);
-					this._ctx.globalAlpha = this._opacity.getCurrentValue();
-					this._ctx.fillText(this._text, 0, 0, this._textWidth);
+					this._ctx.clearRect(0, this._offsetY - this._options.fontSize * 1.2 / 2, this._canvas.width, this._options.fontSize * 1.2);
+					//this._ctx.font = `${50 * scale}px ArialBlack`;
+					this._ctx.translate(this._offsetX, this._offsetY);
+					//this._ctx.scale( scale, scale );
+					//this._ctx.globalAlpha = this._opacity.getCurrentValue();
+					this._ctx.fillText(this._text, 0, 0);
 					this._ctx.restore();
 					ctx.drawImage(this._canvas, 0, 0, this._canvas.width, this._canvas.height);
 				}
+			}
+		}, {
+			key: "setDuration",
+			value: function setDuration(duration) {
+				this._currentDuration = duration;
+				this._opacity.setDuration(duration);
+				this._scale.setDuration(duration);
 			}
 		}]);
 	
@@ -327,6 +369,7 @@
 			this._elapsed = 0;
 			this._currentDirection = this._animOptions.direction;
 			this._currentValue = this._animOptions.start;
+			this._currentDuration = this._animOptions.duration;
 		}
 	
 		_createClass(Property, [{
@@ -350,16 +393,20 @@
 				return this._currentValue;
 			}
 		}, {
+			key: "setDuration",
+			value: function setDuration(duration) {
+				this._currentDuration = duration;
+			}
+		}, {
 			key: "_tick",
 			value: function _tick(timeDelta) {
-				var options = this._animOptions;
-	
 				var value = void 0;
-				var start = options.start,
-				    end = options.end,
-				    duration = options.duration,
-				    loop = options.loop,
-				    reverseLoop = options.reverseLoop;
+				var duration = this._currentDuration;
+				var _animOptions = this._animOptions,
+				    start = _animOptions.start,
+				    end = _animOptions.end,
+				    loop = _animOptions.loop,
+				    reverseLoop = _animOptions.reverseLoop;
 	
 	
 				this._elapsed += timeDelta;
@@ -406,13 +453,12 @@
 		var ctx = document.createElement("canvas").getContext("2d"),
 		    dpr = window.devicePixelRatio || 1,
 		    bsr = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
-	
 		return dpr / bsr;
 	}();
 	
 	var CANVAS_DIMENSIONS = exports.CANVAS_DIMENSIONS = {
-		width: 300,
-		height: 100
+		width: 560,
+		height: 960
 	};
 
 /***/ }
