@@ -33,7 +33,7 @@ const WORD_LIST = [
 ];
 
 const TIME_BETWEEN_TEXTS = 100;
-const OVERLAP_TIME_TEXTS = 10;
+const OVERLAP_TIME_TEXTS = 16;
 
 const DELAY_DURATION = 6000;
 const FINAL_SPEED = 1000;
@@ -58,7 +58,9 @@ export default class WordSlider {
 
 	_stopSlider( e ) {
 		e.preventDefault();
-		this._startDecreasingSpeed = this._currentTimeStamp;
+		if ( !this._startDecreasingSpeed ){
+			this._startDecreasingSpeed = this._currentTimeStamp;
+		}
 	}
 
 	start() {
@@ -68,7 +70,7 @@ export default class WordSlider {
 		this._currentTime = 0;
 		this._currentSpeed = TIME_BETWEEN_TEXTS;
 		for ( let i = 0; i < this._textArr.length; i++ ) {
-			this._textArr[ i ].setDuration( this._currentSpeed );
+			this._textArr[ i ].setDuration( this._currentSpeed + OVERLAP_TIME_TEXTS );
 		}
 		this._textArr[ this._currentText ].start();
 	}
@@ -90,7 +92,7 @@ export default class WordSlider {
 			for ( let i = 0; i < this._textArr.length; i++ ) {
 				let text = this._textArr[ i ];
 				if ( this._startDecreasingSpeed ) {
-					text.setDuration( this._currentSpeed );
+					text.setDuration( this._currentSpeed + OVERLAP_TIME_TEXTS );
 				}
 				text.update( timeDelta, timestamp );
 			}

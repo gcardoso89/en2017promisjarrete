@@ -129,7 +129,7 @@
 	var WORD_LIST = ['DETTE', 'CIGARETTES', 'SERRE-TETE', 'BILLE EN TÊTE', 'CAFET', 'BAGUETTE', 'PETE', 'COUETTE', 'RACLETTE', 'RIME EN ETTE', 'LUNETTES', 'J’ARRETE', 'FACETTE', 'INTERNET', 'TRINQUETTE', 'CACHETTE', 'CHANSONETTE', 'CHARETTE', 'CHEMISETTE', 'COURBETTE', 'DISQUETTE', 'OUBLIETTES', 'POMPETTE', 'CHAUSSETTES', 'TROTINETTE', 'EPAULETTES', 'COMÈTE', 'PAILLETTE', 'FETE'];
 	
 	var TIME_BETWEEN_TEXTS = 100;
-	var OVERLAP_TIME_TEXTS = 10;
+	var OVERLAP_TIME_TEXTS = 16;
 	
 	var DELAY_DURATION = 6000;
 	var FINAL_SPEED = 1000;
@@ -157,7 +157,9 @@
 			key: '_stopSlider',
 			value: function _stopSlider(e) {
 				e.preventDefault();
-				this._startDecreasingSpeed = this._currentTimeStamp;
+				if (!this._startDecreasingSpeed) {
+					this._startDecreasingSpeed = this._currentTimeStamp;
+				}
 			}
 		}, {
 			key: 'start',
@@ -168,7 +170,7 @@
 				this._currentTime = 0;
 				this._currentSpeed = TIME_BETWEEN_TEXTS;
 				for (var i = 0; i < this._textArr.length; i++) {
-					this._textArr[i].setDuration(this._currentSpeed);
+					this._textArr[i].setDuration(this._currentSpeed + OVERLAP_TIME_TEXTS);
 				}
 				this._textArr[this._currentText].start();
 			}
@@ -191,7 +193,7 @@
 					for (var i = 0; i < this._textArr.length; i++) {
 						var text = this._textArr[i];
 						if (this._startDecreasingSpeed) {
-							text.setDuration(this._currentSpeed);
+							text.setDuration(this._currentSpeed + OVERLAP_TIME_TEXTS);
 						}
 						text.update(timeDelta, timestamp);
 					}
@@ -258,7 +260,7 @@
 	};
 	
 	var DEFAULT_OPTIONS = {
-		animDuration: 1000,
+		animDuration: 100,
 		fontSize: 50
 	};
 	
@@ -306,7 +308,7 @@
 				if (this._isActive) {
 					this._startTime = this._startTime || timestamp;
 					this._currentTime += timeDelta;
-					if (this._currentTime > this._currentDuration) {
+					if (this._currentTime >= this._currentDuration) {
 						this._isActive = false;
 						this._currentTime = 0;
 					}
@@ -318,12 +320,12 @@
 			key: "draw",
 			value: function draw(ctx) {
 				if (this._isActive) {
-					//let scale = this._scale.getCurrentValue();
+					var scale = this._scale.getCurrentValue();
 					this._ctx.save();
 					this._ctx.clearRect(0, this._offsetY - this._options.fontSize * 1.2 / 2, this._canvas.width, this._options.fontSize * 1.2);
 					//this._ctx.font = `${50 * scale}px ArialBlack`;
 					this._ctx.translate(this._offsetX, this._offsetY);
-					//this._ctx.scale( scale, scale );
+					this._ctx.scale(scale, scale);
 					//this._ctx.globalAlpha = this._opacity.getCurrentValue();
 					this._ctx.fillText(this._text, 0, 0);
 					this._ctx.restore();

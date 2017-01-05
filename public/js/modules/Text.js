@@ -7,7 +7,7 @@ const POSITION = {
 };
 
 const DEFAULT_OPTIONS = {
-	animDuration: 1000,
+	animDuration: 100,
 	fontSize: 50
 };
 
@@ -51,7 +51,7 @@ export default class Text {
 		if ( this._isActive ) {
 			this._startTime = this._startTime || timestamp;
 			this._currentTime += timeDelta;
-			if ( this._currentTime > this._currentDuration ) {
+			if ( this._currentTime >= this._currentDuration ) {
 				this._isActive = false;
 				this._currentTime = 0;
 			}
@@ -63,12 +63,12 @@ export default class Text {
 
 	draw( ctx ) {
 		if ( this._isActive ) {
-			//let scale = this._scale.getCurrentValue();
+			let scale = this._scale.getCurrentValue();
 			this._ctx.save();
 			this._ctx.clearRect( 0, this._offsetY - ( this._options.fontSize * 1.2 ) / 2, this._canvas.width, this._options.fontSize * 1.2 );
 			//this._ctx.font = `${50 * scale}px ArialBlack`;
 			this._ctx.translate( this._offsetX, this._offsetY );
-			//this._ctx.scale( scale, scale );
+			this._ctx.scale( scale, scale );
 			//this._ctx.globalAlpha = this._opacity.getCurrentValue();
 			this._ctx.fillText( this._text, 0, 0 );
 			this._ctx.restore();
