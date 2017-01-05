@@ -1,37 +1,5 @@
 import Text from "./Text";
-import { RESPONSIVE_WIDTH_ARRAY } from "../constants";
-
-const WORD_LIST = [
-	'DETTE',
-	'CIGARETTES',
-	'SERRE-TETE',
-	'BILLE EN TÊTE',
-	'CAFET',
-	'BAGUETTE',
-	'PETE',
-	'COUETTE',
-	'RACLETTE',
-	'RIME EN ETTE',
-	'LUNETTES',
-	'J’ARRETE',
-	'FACETTE',
-	'INTERNET',
-	'TRINQUETTE',
-	'CACHETTE',
-	'CHANSONETTE',
-	'CHARETTE',
-	'CHEMISETTE',
-	'COURBETTE',
-	'DISQUETTE',
-	'OUBLIETTES',
-	'POMPETTE',
-	'CHAUSSETTES',
-	'TROTINETTE',
-	'EPAULETTES',
-	'COMÈTE',
-	'PAILLETTE',
-	'FETE'
-];
+import { RESPONSIVE_WIDTH_ARRAY, WORD_LIST } from "../constants";
 
 const TIME_BETWEEN_TEXTS = 100;
 const OVERLAP_TIME_TEXTS = 20;

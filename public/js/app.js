@@ -128,8 +128,6 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var WORD_LIST = ['DETTE', 'CIGARETTES', 'SERRE-TETE', 'BILLE EN TÊTE', 'CAFET', 'BAGUETTE', 'PETE', 'COUETTE', 'RACLETTE', 'RIME EN ETTE', 'LUNETTES', 'J’ARRETE', 'FACETTE', 'INTERNET', 'TRINQUETTE', 'CACHETTE', 'CHANSONETTE', 'CHARETTE', 'CHEMISETTE', 'COURBETTE', 'DISQUETTE', 'OUBLIETTES', 'POMPETTE', 'CHAUSSETTES', 'TROTINETTE', 'EPAULETTES', 'COMÈTE', 'PAILLETTE', 'FETE'];
-	
 	var TIME_BETWEEN_TEXTS = 100;
 	var OVERLAP_TIME_TEXTS = 20;
 	
@@ -228,7 +226,7 @@
 				if (this._isActive) {
 					if (this._currentTime >= this._currentSpeed) {
 						this._currentTime = 0;
-						this._currentText = this._currentText + 1 === WORD_LIST.length ? 0 : this._currentText + 1;
+						this._currentText = this._currentText + 1 === _constants.WORD_LIST.length ? 0 : this._currentText + 1;
 						this._textArr[this._currentText].start();
 					}
 	
@@ -273,8 +271,8 @@
 			key: "createTextArray",
 			value: function createTextArray() {
 				var arr = [];
-				for (var i = 0; i < WORD_LIST.length; i++) {
-					arr.push(new _Text2.default(WORD_LIST[i], { animDuration: TIME_BETWEEN_TEXTS + OVERLAP_TIME_TEXTS }));
+				for (var i = 0; i < _constants.WORD_LIST.length; i++) {
+					arr.push(new _Text2.default(_constants.WORD_LIST[i], { animDuration: TIME_BETWEEN_TEXTS + OVERLAP_TIME_TEXTS }));
 				}
 				return arr;
 			}
@@ -536,6 +534,8 @@
 	};
 	
 	var RESPONSIVE_WIDTH_ARRAY = exports.RESPONSIVE_WIDTH_ARRAY = [1980, 1080, 1024, 768, 728, 480];
+	
+	var WORD_LIST = exports.WORD_LIST = ['DETTE', 'CIGARETTES', 'SERRE-TETE', 'BILLE EN TÊTE', 'CAFET', 'BAGUETTE', 'PETE', 'COUETTE', 'RACLETTE', 'RIME EN ETTE', 'LUNETTES', 'J’ARRETE', 'FACETTE', 'INTERNET', 'TRINQUETTE', 'CACHETTE', 'CHANSONETTE', 'CHARETTE', 'CHEMISETTE', 'COURBETTE', 'DISQUETTE', 'OUBLIETTES', 'POMPETTE', 'CHAUSSETTES', 'TROTINETTE', 'EPAULETTES', 'COMÈTE', 'PAILLETTE', 'FETE'];
 
 /***/ }
 /******/ ]);
