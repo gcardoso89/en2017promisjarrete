@@ -34,7 +34,7 @@ const WORD_LIST = [
 ];
 
 const TIME_BETWEEN_TEXTS = 100;
-const OVERLAP_TIME_TEXTS = 16;
+const OVERLAP_TIME_TEXTS = 20;
 
 const DELAY_DURATION = 6000;
 const FINAL_SPEED = 1000;
