@@ -1,0 +1,22 @@
+@import "variables";
+
+@mixin responsive-border-width( $element ){
+	@each $width,$border-width in $border-widths {
+		@media all and ( max-width: ( $width + px ) ){
+			#{$element}{
+				border-width: ( $border-width + px );
+			}
+		}
+	}
+}
+
+@mixin responsive-padding-header(){
+	@each $width,$border-width in $border-widths {
+		@media all and ( max-width: ( $width + px ) ){
+			$border-value: ( $border-width + px );
+			header {
+				padding:$border-value $border-value 0 $border-value;
+			}
+		}
+	}
+}
