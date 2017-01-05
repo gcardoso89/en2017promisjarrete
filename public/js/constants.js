@@ -11,6 +11,8 @@ export const PIXEL_RATIO = (function () {
 })();
 
 export const CANVAS_DIMENSIONS = {
-	width: 560,
-	height: 960
+	width: 960,
+	height: 540
 };
+
+export const RESPONSIVE_WIDTH_ARRAY = [ 1980, 1080, 1024, 768, 728, 480];

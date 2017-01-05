@@ -110,7 +110,7 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -121,6 +121,8 @@
 	var _Text = __webpack_require__(2);
 	
 	var _Text2 = _interopRequireDefault(_Text);
+	
+	var _constants = __webpack_require__(4);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -134,9 +136,23 @@
 	var DELAY_DURATION = 6000;
 	var FINAL_SPEED = 1000;
 	var DECREASE_SPEED = 1.1;
+	var FONT_SIZE_LIST = [138, 112, 88, 88, 56, 56];
+	
+	var FONT_SiZE_MAP = function (fontSizeList) {
+		var map = {};
+	
+		for (var i = 0; i < _constants.RESPONSIVE_WIDTH_ARRAY.length; i++) {
+			var width = _constants.RESPONSIVE_WIDTH_ARRAY[i];
+			map[width] = fontSizeList[i];
+		}
+	
+		return map;
+	}(FONT_SIZE_LIST);
 	
 	var WordSlider = function () {
 		function WordSlider() {
+			var _this = this;
+	
 			_classCallCheck(this, WordSlider);
 	
 			this._isActive = false;
@@ -146,15 +162,25 @@
 			this._currentSpeed = TIME_BETWEEN_TEXTS;
 			this._startDecreasingSpeed = null;
 			this._currentTimeStamp = null;
-	
+			this._currentFontSize = FONT_SIZE_LIST[0];
 			this._textArr = WordSlider.createTextArray();
 			this._button = document.getElementById('stop-slider');
+			this._win = window;
+	
+			this._resizeHandlerTimeout = null;
 	
 			this._button.addEventListener('click', this._stopSlider.bind(this));
+			this._win.addEventListener('resize', function () {
+				if (_this._resizeHandlerTimeout) {
+					clearTimeout(_this._resizeHandlerTimeout);
+					_this._resizeHandlerTimeout = null;
+				}
+				_this._resizeHandlerTimeout = setTimeout(_this._handleResize.bind(_this), 500);
+			});
 		}
 	
 		_createClass(WordSlider, [{
-			key: '_stopSlider',
+			key: "_stopSlider",
 			value: function _stopSlider(e) {
 				e.preventDefault();
 				if (!this._startDecreasingSpeed) {
@@ -162,8 +188,30 @@
 				}
 			}
 		}, {
-			key: 'start',
+			key: "_handleResize",
+			value: function _handleResize() {
+				var newFontSize = void 0;
+				this._currentWidth = this._win.innerWidth;
+				if (this._currentWidth >= _constants.RESPONSIVE_WIDTH_ARRAY[0]) {
+					newFontSize = _constants.RESPONSIVE_WIDTH_ARRAY[0];
+				} else {
+					for (var i = 0; i < _constants.RESPONSIVE_WIDTH_ARRAY.length; i++) {
+						if (this._currentWidth < _constants.RESPONSIVE_WIDTH_ARRAY[i]) {
+							var indNormalized = i + 1 === _constants.RESPONSIVE_WIDTH_ARRAY.length ? i : i + 1;
+							newFontSize = FONT_SiZE_MAP[_constants.RESPONSIVE_WIDTH_ARRAY[indNormalized]];
+						}
+					}
+				}
+	
+				if (newFontSize !== this._currentFontSize) {
+					this._currentFontSize = newFontSize;
+					this.changeFontSize();
+				}
+			}
+		}, {
+			key: "start",
 			value: function start() {
+				this._handleResize();
 				this._isActive = true;
 				this._startTime = Date.now();
 				this._currentText = 0;
@@ -175,7 +223,7 @@
 				this._textArr[this._currentText].start();
 			}
 		}, {
-			key: 'update',
+			key: "update",
 			value: function update(timeDelta, timestamp) {
 				if (this._isActive) {
 					if (this._currentTime >= this._currentSpeed) {
@@ -208,14 +256,21 @@
 				this._currentTimeStamp = timestamp;
 			}
 		}, {
-			key: 'draw',
+			key: "draw",
 			value: function draw(ctx) {
 				for (var i = 0; i < this._textArr.length; i++) {
 					this._textArr[i].draw(ctx);
 				}
 			}
+		}, {
+			key: "changeFontSize",
+			value: function changeFontSize() {
+				for (var i = 0; i < this._textArr.length; i++) {
+					this._textArr[i].setFontSize(this._currentFontSize);
+				}
+			}
 		}], [{
-			key: 'createTextArray',
+			key: "createTextArray",
 			value: function createTextArray() {
 				var arr = [];
 				for (var i = 0; i < WORD_LIST.length; i++) {
@@ -254,11 +309,6 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var POSITION = {
-		x: 0,
-		y: 0
-	};
-	
 	var DEFAULT_OPTIONS = {
 		animDuration: 100,
 		fontSize: 50
@@ -268,19 +318,21 @@
 		function Text(text, options) {
 			_classCallCheck(this, Text);
 	
+			this._options = _extends({}, DEFAULT_OPTIONS, options);
+	
 			this._startTime = null;
 			this._currentTime = null;
-	
 			this._text = text;
-			this._options = _extends({}, DEFAULT_OPTIONS, options);
+			this._currentFontSize = this._options.fontSize;
 			this._canvas = document.createElement('canvas');
 			this._canvas.width = _constants.CANVAS_DIMENSIONS.width * _constants.PIXEL_RATIO;
 			this._canvas.height = _constants.CANVAS_DIMENSIONS.height * _constants.PIXEL_RATIO;
 			this._ctx = this._canvas.getContext('2d');
 			this._ctx.setTransform(_constants.PIXEL_RATIO, 0, 0, _constants.PIXEL_RATIO, 0, 0);
-			this._ctx.font = "normal normal 900 " + this._options.fontSize + "px 'Source Sans Pro'";
+			this._ctx.font = this._getCurrentFontExpression();
 			this._ctx.textAlign = 'center';
 			this._ctx.textBaseline = 'middle';
+			this._ctx.fillStyle = 'white';
 			this._ctx.imageSmoothingEnabled = true;
 			this._textWidth = _constants.CANVAS_DIMENSIONS.width;
 	
@@ -322,7 +374,7 @@
 				if (this._isActive) {
 					var scale = this._scale.getCurrentValue();
 					this._ctx.save();
-					this._ctx.clearRect(0, this._offsetY - this._options.fontSize * 1.2 / 2, this._canvas.width, this._options.fontSize * 1.2);
+					this._ctx.clearRect(0, this._offsetY - this._currentFontSize * 1.2 / 2, this._canvas.width, this._currentFontSize * 1.2);
 					//this._ctx.font = `${50 * scale}px ArialBlack`;
 					this._ctx.translate(this._offsetX, this._offsetY);
 					this._ctx.scale(scale, scale);
@@ -333,11 +385,23 @@
 				}
 			}
 		}, {
+			key: "setFontSize",
+			value: function setFontSize(fontSize) {
+				this._currentFontSize = fontSize;
+				this._ctx.font = this._getCurrentFontExpression();
+				this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+			}
+		}, {
 			key: "setDuration",
 			value: function setDuration(duration) {
 				this._currentDuration = duration;
 				this._opacity.setDuration(duration);
 				this._scale.setDuration(duration);
+			}
+		}, {
+			key: "_getCurrentFontExpression",
+			value: function _getCurrentFontExpression() {
+				return "normal normal 900 " + this._currentFontSize + "px 'Source Sans Pro'";
 			}
 		}]);
 	
@@ -467,9 +531,11 @@
 	}();
 	
 	var CANVAS_DIMENSIONS = exports.CANVAS_DIMENSIONS = {
-		width: 560,
-		height: 960
+		width: 960,
+		height: 540
 	};
+	
+	var RESPONSIVE_WIDTH_ARRAY = exports.RESPONSIVE_WIDTH_ARRAY = [1980, 1080, 1024, 768, 728, 480];
 
 /***/ }
 /******/ ]);

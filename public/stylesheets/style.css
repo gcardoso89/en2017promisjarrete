@@ -394,24 +394,86 @@ th {
   padding: 0;
 }
 
+@font-face {
+  font-family: 'en2017promisjarrete';
+  src: url("fonts/en2017promisjarrete.eot?1298p8");
+  src: url("fonts/en2017promisjarrete.eot?1298p8#iefix") format("embedded-opentype"), url("fonts/en2017promisjarrete.ttf?1298p8") format("truetype"), url("fonts/en2017promisjarrete.woff?1298p8") format("woff"), url("fonts/en2017promisjarrete.svg?1298p8#en2017promisjarrete") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="ic-"], [class*=" ic-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'en2017promisjarrete' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-facebook:before {
+  content: "\e900";
+}
+
+.ic-twitter:before {
+  content: "\e901";
+}
+
+.ic-mail:before {
+  content: "\e902";
+}
+
+.ic-logo:before {
+  content: "\e903";
+}
+
 body {
   font: 100% 'Source Sans Pro', sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
 }
 
-.word-slider-wrap {
+header {
+  position: relative;
+  z-index: 2;
+}
+
+main {
   position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
+  left: 0;
+  top: 0;
   overflow: hidden;
+  z-index: 1;
+  border: 1px solid white;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #ff7376;
 }
-
-#word-slider {
+main.color-red {
+  background: #ff7376;
+}
+main.color-pink {
+  background: #ffc0db;
+}
+main.color-green {
+  background: #7bc9cf;
+}
+main.color-yellow {
+  background: #ffdc00;
+}
+main.color-blue {
+  background: #4f7ffb;
+}
+main #word-slider {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   image-rendering: optimizeSpeed;
@@ -434,8 +496,7 @@ a {
   left: 50%;
   top: 50%;
 }
-
-#stop-slider {
+main #stop-slider {
   position: absolute;
   top: 50%;
   margin-top: 40px;
@@ -444,4 +505,35 @@ a {
   -ms-transform: translate(-50%, 0);
   -webkit-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
+}
+
+@media all and (max-width: 1920px) {
+  main {
+    border-width: 22px;
+  }
+}
+@media all and (max-width: 1080px) {
+  main {
+    border-width: 22px;
+  }
+}
+@media all and (max-width: 1024px) {
+  main {
+    border-width: 18px;
+  }
+}
+@media all and (max-width: 768px) {
+  main {
+    border-width: 18px;
+  }
+}
+@media all and (max-width: 728px) {
+  main {
+    border-width: 12px;
+  }
+}
+@media all and (max-width: 480px) {
+  main {
+    border-width: 12px;
+  }
 }

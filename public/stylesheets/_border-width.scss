@@ -1,0 +1,11 @@
+@import "variables";
+
+@mixin border-width( $element ){
+	@each $width,$border-width in $border-widths {
+		@media all and ( max-width: ( $width + px ) ){
+			#{$element}{
+				border-width: ( $border-width + px );
+			}
+		}
+	}
+}
