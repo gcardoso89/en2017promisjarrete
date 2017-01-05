@@ -20,7 +20,7 @@ app.use( logger( 'dev' ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( { extended: false } ) );
 app.use( cookieParser() );
-app.use( require( 'node-compass' )( { mode: 'expanded' } ) );
+app.use( require( 'node-compass' )( { logging: true } ) );
 
 app.use( '/', routes );
 
