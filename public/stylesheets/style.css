@@ -446,6 +446,12 @@ header {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+header .wrap {
+  padding: 1.25em;
+}
+header .logo {
+  font-size: 1.25em;
+}
 
 main {
   position: absolute;

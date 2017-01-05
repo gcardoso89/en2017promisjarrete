@@ -2,6 +2,10 @@
 @import "colors";
 @import "responsive-mixins";
 
+@function em( $value, $baseSize: 16){
+	@return ($value/$baseSize)+em;
+}
+
 body {
 	font: 100% 'Source Sans Pro', sans-serif;
 }
@@ -14,8 +18,13 @@ header {
 	position: relative;
 	z-index: 2;
 	@include box-sizing(border-box);
-	.logo {
 
+	.wrap {
+		padding: em( 20 );
+	}
+
+	.logo {
+		font-size: em( 50 );
 	}
 
 }
