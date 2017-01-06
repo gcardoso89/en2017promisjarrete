@@ -35,3 +35,4 @@ npm-debug.log
 # Compass cache
 public/.sass-cache
 public/.sass-cache/*
+public/stylesheets/style.css
