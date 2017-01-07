@@ -17,7 +17,6 @@ app.set( 'view engine', 'hbs' );
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use( require( 'node-compass' )( { mode: 'expanded', project: __dirname, css: 'public/css', sass: 'compass/' } ) );
 app.use( express.static( path.join( __dirname, 'public' ) ) );
-app.use( logger( 'dev' ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( { extended: false } ) );
 app.use( cookieParser() );
