@@ -3,8 +3,6 @@ var path = require( 'path' );
 var config = require( './public/js/config' );
 var btoa = require( 'btoa' );
 
-console.log( "Generating SOCIAL images" );
-
 var ImageGenerator = {
 
 	_dimensionsGuide: {
@@ -59,10 +57,13 @@ var ImageGenerator = {
 
 };
 
-for ( var word in config.wordDetailMap ) {
-	if ( config.wordDetailMap.hasOwnProperty( word ) ) {
-		ImageGenerator.generateImage( btoa( word ), 'facebook', (function ( word ) {
-			return function() { console.log( "Image Complete for word " + word ) };
-		})( word ) );
+if ( process.GENERATE_SOCIAL_IMAGES ){
+	console.log( "Generating SOCIAL images" );
+	for ( var word in config.wordDetailMap ) {
+		if ( config.wordDetailMap.hasOwnProperty( word ) ) {
+			ImageGenerator.generateImage( btoa( word ), 'facebook', (function ( word ) {
+				return function() { console.log( "Image Complete for word " + word ) };
+			})( word ) );
+		}
 	}
 }

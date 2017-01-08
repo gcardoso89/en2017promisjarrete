@@ -96,6 +96,7 @@ export default class WordSlider {
 			this._textArr[ i ].stop();
 			this._textArr[ i ].setDuration( this._currentSpeed + OVERLAP_TIME_TEXTS );
 		}
+		this._button.blur();
 		this._textArr[ this._currentText ].start();
 	}
 

@@ -62,7 +62,7 @@ main {
 	overflow: hidden;
 	z-index: 1;
 	border: 22px solid white;
-	@media all and (min-width: 481px){
+	@media all and (min-width: 481px) {
 		min-height: 630px;
 	}
 
@@ -71,14 +71,6 @@ main {
 	@include background-colors(true);
 
 	canvas {
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
-		image-rendering: optimizeSpeed; /* Older versions of FF          */
-		image-rendering: -moz-crisp-edges; /* FF 6.0+                       */
-		image-rendering: -webkit-optimize-contrast; /* Safari                        */
-		image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
-		image-rendering: pixelated; /* Awesome future-browsers       */
-		-ms-interpolation-mode: nearest-neighbor; /* IE                            */
 		@include transform(translate3d(-50%, -50%, 0));
 		position: absolute;
 		left: 50%;
@@ -130,6 +122,11 @@ main {
 		img {
 			max-height: 100%;
 			max-width: 100%;
+			position: relative;
+			display: block;
+			top: 50%;
+			left: 50%;
+			@include transform(translate(-50%, -50%));
 		}
 	}
 
@@ -146,6 +143,22 @@ main {
 		left: 50%;
 		bottom: 15%;
 		@include transform(translate(-50%, 0%));
+	}
+
+	.social-container {
+		position: absolute;
+		bottom: 5%;
+		left: 50%;
+		@include transform(translate(-50%, 0%));
+		@include colours(color);
+		font-size: em(26);
+		white-space: nowrap;
+		a {
+			display: inline-block;
+			padding: 0 em(5);
+			margin: 0 em(5);
+			color: inherit;
+		}
 	}
 
 }

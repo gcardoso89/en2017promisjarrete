@@ -20,6 +20,7 @@ export const FONT_SIZE_LIST = [ 138, 112, 88, 88, 56, 56, 45 ];
 
 export const EVENTS = {
 	RESOLUTION_WINNER: 'RESOLUTION_WINNER', //arg1: text {string}
-	PLAY_WORD_SLIDER: 'PLAY_WORD_SLIDER'
+	PLAY_WORD_SLIDER: 'PLAY_WORD_SLIDER',
+	SET_SOCIAL_LINKS: 'SET_SOCIAL_LINKS' //arg1: shareId {string}
 };
 

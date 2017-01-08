@@ -2,6 +2,7 @@ import WordSlider from "./modules/WordSlider";
 import { PIXEL_RATIO, CANVAS_DIMENSIONS, EVENTS, COLOURS } from "./constants";
 import DetailContainer from "./modules/DetailContainer";
 import globalEmitter from "./modules/Emitter";
+import SocialLinks from "./modules/SocialLinks";
 
 (function () {
 
@@ -20,8 +21,10 @@ import globalEmitter from "./modules/Emitter";
 
 			this._detailContainer = new DetailContainer();
 			this._wordSlider = new WordSlider();
+			this._socialLinks = new SocialLinks();
 			this._tick( 0 );
 
+			globalEmitter.subscribe( EVENTS.RESOLUTION_WINNER, ( e, word ) => globalEmitter.invoke( EVENTS.SET_SOCIAL_LINKS, word ) )
 			this._start();
 		};
 

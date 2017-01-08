@@ -10,12 +10,12 @@ function generateNewColor() {
 
 /* GET home page. */
 router.get( '/', function ( req, res, next ) {
-	res.render( 'index', { classColorName: 'color-' + generateNewColor(), layout: null } );
+	res.render( 'index', { classColorName: 'color-' + generateNewColor(), layout: null, shareid: null } );
 } );
 
 router.get( '/:phrase', function ( req, res, next ) {
 	var phrase = encodeURIComponent( req.params.phrase );
- 	res.render( 'index', { classColorName: 'color-' + generateNewColor(), layout: null, phrase: phrase } );
+ 	res.render( 'index', { classColorName: 'color-' + generateNewColor(), layout: null, phrase: phrase, shareid: decodeURIComponent( phrase ) } );
 } );
 
 module.exports = router;

@@ -8210,6 +8210,10 @@
 	
 	var _Emitter2 = _interopRequireDefault(_Emitter);
 	
+	var _SocialLinks = __webpack_require__(307);
+	
+	var _SocialLinks2 = _interopRequireDefault(_SocialLinks);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8231,8 +8235,12 @@
 	
 				this._detailContainer = new _DetailContainer2.default();
 				this._wordSlider = new _WordSlider2.default();
+				this._socialLinks = new _SocialLinks2.default();
 				this._tick(0);
 	
+				_Emitter2.default.subscribe(_constants.EVENTS.RESOLUTION_WINNER, function (e, word) {
+					return _Emitter2.default.invoke(_constants.EVENTS.SET_SOCIAL_LINKS, word);
+				});
 				this._start();
 			}
 	
@@ -8409,6 +8417,7 @@
 					this._textArr[i].stop();
 					this._textArr[i].setDuration(this._currentSpeed + OVERLAP_TIME_TEXTS);
 				}
+				this._button.blur();
 				this._textArr[this._currentText].start();
 			}
 		}, {
@@ -8754,7 +8763,8 @@
 	
 	var EVENTS = exports.EVENTS = {
 		RESOLUTION_WINNER: 'RESOLUTION_WINNER', //arg1: text {string}
-		PLAY_WORD_SLIDER: 'PLAY_WORD_SLIDER'
+		PLAY_WORD_SLIDER: 'PLAY_WORD_SLIDER',
+		SET_SOCIAL_LINKS: 'SET_SOCIAL_LINKS' //arg1: shareId {string}
 	};
 
 /***/ },
@@ -9227,6 +9237,100 @@
 	}();
 	
 	exports.default = DetailContainer;
+
+/***/ },
+/* 306 */,
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _constants = __webpack_require__(302);
+	
+	var _Emitter = __webpack_require__(304);
+	
+	var _Emitter2 = _interopRequireDefault(_Emitter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var SocialLinks = function () {
+		function SocialLinks() {
+			var _this = this;
+	
+			_classCallCheck(this, SocialLinks);
+	
+			this._shareUrl = null;
+			this._baseUrl = location.protocol + "//" + location.host + "/";
+			this._twitter = document.getElementById('social-twitter');
+			this._facebook = document.getElementById('social-facebook');
+			this._mail = document.getElementById('social-mail');
+	
+			_Emitter2.default.subscribe(_constants.EVENTS.SET_SOCIAL_LINKS, function (e, word) {
+				return _this._setSocialLinks(btoa(word));
+			});
+		}
+	
+		_createClass(SocialLinks, [{
+			key: "_setTwitterLink",
+			value: function _setTwitterLink(receiver) {
+				var baseUrl = 'https://twitter.com/intent/tweet';
+				var shareUrl = encodeURIComponent(this._shareUrl);
+				baseUrl += '?url=' + shareUrl;
+				baseUrl += "&text=" + encodeURIComponent("Voici un petit message de ma part pour " + receiver + " - " + receiver + " > ");
+	
+				this._twitter.addEventListener('click', function (e) {
+					e.preventDefault();
+					var width = 575,
+					    height = 400,
+					    left = (window.innerWidth - width) / 2,
+					    top = (window.innerHeight - height) / 2,
+					    opts = 'status=1' + ',width=' + width + ',height=' + height + ',top=' + top + ',left=' + left;
+					window.open(baseUrl, 'twitter', opts);
+					return false;
+				});
+			}
+		}, {
+			key: "_setFacebookLink",
+			value: function _setFacebookLink() {
+				var _this2 = this;
+	
+				this._facebook.addEventListener('click', function (e) {
+					e.preventDefault();
+					FB.ui({
+						method: 'share',
+						href: _this2._shareUrl
+					});
+				});
+			}
+		}, {
+			key: "_setMailLink",
+			value: function _setMailLink() {
+				var subject = '';
+				var bodyText = '';
+				this._mail.setAttribute('href', 'mailto:?subject=' + subject + '&body=' + bodyText);
+			}
+		}, {
+			key: "_setSocialLinks",
+			value: function _setSocialLinks(shareId) {
+				this._shareUrl = this._baseUrl + shareId;
+				this._setTwitterLink();
+				this._setFacebookLink();
+				this._setMailLink();
+			}
+		}]);
+	
+		return SocialLinks;
+	}();
+	
+	exports.default = SocialLinks;
 
 /***/ }
 /******/ ]);
