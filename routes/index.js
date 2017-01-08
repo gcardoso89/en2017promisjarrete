@@ -1,6 +1,6 @@
 var express = require( 'express' );
 var router = express.Router();
-var config = require( '../config' );
+var config = require( '../public/js/config' );
 
 function generateNewColor() {
 	var color = config.colorList[ Math.floor( Math.random() * ( config.colorList.length - 1 ) ) ];

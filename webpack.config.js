@@ -1,6 +1,6 @@
 var path = require( 'path' );
 module.exports = {
-	entry: [ 'babel-polyfill', './public/js/main.js' ],
+	entry: [ './public/js/config.js', 'babel-polyfill', './public/js/main.js' ],
 	output: {
 		path: path.join( __dirname, '/public/js/' ),
 		filename: 'app.js'

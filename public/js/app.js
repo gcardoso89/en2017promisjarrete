@@ -8202,11 +8202,11 @@
 	
 	var _constants = __webpack_require__(302);
 	
-	var _DetailContainer = __webpack_require__(304);
+	var _DetailContainer = __webpack_require__(305);
 	
 	var _DetailContainer2 = _interopRequireDefault(_DetailContainer);
 	
-	var _Emitter = __webpack_require__(303);
+	var _Emitter = __webpack_require__(304);
 	
 	var _Emitter2 = _interopRequireDefault(_Emitter);
 	
@@ -8293,9 +8293,15 @@
 	
 	var _constants = __webpack_require__(302);
 	
-	var _Emitter = __webpack_require__(303);
+	var _config = __webpack_require__(303);
+	
+	var CONFIG = _interopRequireWildcard(_config);
+	
+	var _Emitter = __webpack_require__(304);
 	
 	var _Emitter2 = _interopRequireDefault(_Emitter);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -8320,6 +8326,8 @@
 	}(_constants.FONT_SIZE_LIST);
 	
 	var DELAY_BEFORE_SHOW_DETAIL = 1000;
+	
+	var WORD_LIST = CONFIG.wordList;
 	
 	var WordSlider = function () {
 		function WordSlider() {
@@ -8413,7 +8421,7 @@
 					if (this._currentTime >= this._currentSpeed) {
 						this._currentTime = 0;
 						this._textArr[this._currentText].stop();
-						this._currentText = this._currentText + 1 === _constants.WORD_LIST.length ? 0 : this._currentText + 1;
+						this._currentText = this._currentText + 1 === WORD_LIST.length ? 0 : this._currentText + 1;
 						this._textArr[this._currentText].start();
 					}
 	
@@ -8462,8 +8470,8 @@
 			key: "createTextArray",
 			value: function createTextArray() {
 				var arr = [];
-				for (var i = 0; i < _constants.WORD_LIST.length; i++) {
-					arr.push(new _Text2.default(_constants.WORD_LIST[i], { animDuration: TIME_BETWEEN_TEXTS + OVERLAP_TIME_TEXTS }));
+				for (var i = 0; i < WORD_LIST.length; i++) {
+					arr.push(new _Text2.default(WORD_LIST[i], { animDuration: TIME_BETWEEN_TEXTS + OVERLAP_TIME_TEXTS }));
 				}
 				return arr;
 			}
@@ -8744,49 +8752,66 @@
 	var RESPONSIVE_WIDTH_ARRAY = exports.RESPONSIVE_WIDTH_ARRAY = [1980, 1080, 1024, 768, 728, 480, 380];
 	var FONT_SIZE_LIST = exports.FONT_SIZE_LIST = [138, 112, 88, 88, 56, 56, 45];
 	
-	var WORD_DETAIL_MAP = exports.WORD_DETAIL_MAP = {
-		'DETTE': { type: "image", text: "de croire qu’un jour on sera sorti de la dette", contentURL: "/images/1-DETTE.gif" },
-		'CIGARETTES': { type: "image", text: "de dire «allez cette fois c’est vraiment ma dernière cigarette»", contentURL: "/images/2-CIGARETTES.gif" },
-		'SERRE-TETE': { type: "image", text: "de soutenir à ma mère que «oui oui c’est très 2017 les serre-tête»", contentURL: "/images/3-SERRE-TETE.gif" },
-		'BILLE EN TÊTE': { type: "image", text: "quelque soit le contextes de foncer bille-en-tête", contentURL: "/images/4-BILLE EN TETE.gif" },
-		'CAFET': { type: "image", text: "de reprendre (juste un peu) de frites à la cafèt", contentURL: "/images/5-CAFET.gif" },
-		'BAGUETTE': { type: "image", text: "de laisser mon boss me mener à la baguette", contentURL: "/images/6-BAGUETTE.jpg" },
-		'PETE': { type: "image", text: "de dire «c’est pas moi» quand je pète", contentURL: "/images/7-PETE.gif" },
-		'COUETTE': { type: "image", text: "de passer mon dimanche sous la couette", contentURL: "/images/8-COUETTE.gif" },
-		'RACLETTE': { type: "image", text: "de passer l’hiver entre raclettes et tartiflettes", contentURL: "/images/9-RACLETTE_TARTIFLETTE.gif" },
-		'RIME EN ETTE': { type: "image", text: "de souhaiter bonne année avec une rime en «ette»", contentURL: "/images/10-RIME-EN-ETTE.gif" },
-		'LUNETTES': { type: "", text: "", contentURL: "" },
-		'J’ARRETE': { type: "", text: "", contentURL: "" },
-		'FACETTE': { type: "", text: "", contentURL: "" },
-		'INTERNET': { type: "", text: "", contentURL: "" },
-		'TRINQUETTE': { type: "", text: "", contentURL: "" },
-		'CACHETTE': { type: "", text: "", contentURL: "" },
-		'CHANSONETTE': { type: "", text: "", contentURL: "" },
-		'CHARETTE': { type: "", text: "", contentURL: "" },
-		'CHEMISETTE': { type: "", text: "", contentURL: "" },
-		'COURBETTE': { type: "", text: "", contentURL: "" },
-		'DISQUETTE': { type: "", text: "", contentURL: "" },
-		'OUBLIETTES': { type: "", text: "", contentURL: "" },
-		'POMPETTE': { type: "", text: "", contentURL: "" },
-		'CHAUSSETTES': { type: "video", text: "de garder «juste au cas où» mon magnétocassette", contentURL: "https://www.youtube.com/watch?v=5hb1McPIIyE" },
-		'TROTINETTE': { type: "", text: "", contentURL: "" },
-		'EPAULETTES': { type: "", text: "", contentURL: "" },
-		'COMÈTE': { type: "", text: "", contentURL: "" },
-		'PAILLETTE': { type: "", text: "", contentURL: "" },
-		'FETE': { type: "", text: "", contentURL: "" }
-	};
-	
-	var WORD_LIST = exports.WORD_LIST = Object.keys(WORD_DETAIL_MAP);
-	
 	var EVENTS = exports.EVENTS = {
 		RESOLUTION_WINNER: 'RESOLUTION_WINNER', //arg1: text {string}
 		PLAY_WORD_SLIDER: 'PLAY_WORD_SLIDER'
 	};
-	
-	var COLOURS = exports.COLOURS = ['color-red', 'color-yellow', 'color-blue', 'color-pink', 'color-green'];
 
 /***/ },
 /* 303 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var CONFIG = {
+		colorList: ['#ff7376', '#ffc0db', '#7bc9cf', '#ffdc00', '#4f7ffb'],
+		colorMap: {
+			'#ff7376': 'red',
+			'#ffc0db': 'pink',
+			'#7bc9cf': 'green',
+			'#ffdc00': 'yellow',
+			'#4f7ffb': 'blue'
+		},
+		wordDetailMap: {
+			'DETTE': { type: "image", text: "de croire qu’un jour on sera sorti de la dette", contentURL: "/images/1-DETTE.gif" },
+			'CIGARETTES': { type: "image", text: "de dire «allez cette fois c’est vraiment ma dernière cigarette»", contentURL: "/images/2-CIGARETTES.gif" },
+			'SERRE-TETE': { type: "image", text: "de soutenir à ma mère que «oui oui c’est très 2017 les serre-tête»", contentURL: "/images/3-SERRE-TETE.gif" },
+			'BILLE EN TÊTE': { type: "image", text: "quelque soit le contextes de foncer bille-en-tête", contentURL: "/images/4-BILLE EN TETE.gif" },
+			'CAFET': { type: "image", text: "de reprendre (juste un peu) de frites à la cafèt", contentURL: "/images/5-CAFET.gif" },
+			'BAGUETTE': { type: "image", text: "de laisser mon boss me mener à la baguette", contentURL: "/images/6-BAGUETTE.jpg" },
+			'PETE': { type: "image", text: "de dire «c’est pas moi» quand je pète", contentURL: "/images/7-PETE.gif" },
+			'COUETTE': { type: "image", text: "de passer mon dimanche sous la couette", contentURL: "/images/8-COUETTE.gif" },
+			'RACLETTE': { type: "image", text: "de passer l’hiver entre raclettes et tartiflettes", contentURL: "/images/9-RACLETTE_TARTIFLETTE.gif" },
+			'RIME EN ETTE': { type: "image", text: "de souhaiter bonne année avec une rime en «ette»", contentURL: "/images/10-RIME-EN-ETTE.gif" },
+			'LUNETTES': { type: "", text: "", contentURL: "" },
+			'J’ARRETE': { type: "", text: "", contentURL: "" },
+			'FACETTE': { type: "", text: "", contentURL: "" },
+			'INTERNET': { type: "", text: "", contentURL: "" },
+			'TRINQUETTE': { type: "", text: "", contentURL: "" },
+			'CACHETTE': { type: "", text: "", contentURL: "" },
+			'CHANSONETTE': { type: "", text: "", contentURL: "" },
+			'CHARETTE': { type: "", text: "", contentURL: "" },
+			'CHEMISETTE': { type: "", text: "", contentURL: "" },
+			'COURBETTE': { type: "", text: "", contentURL: "" },
+			'DISQUETTE': { type: "", text: "", contentURL: "" },
+			'OUBLIETTES': { type: "", text: "", contentURL: "" },
+			'POMPETTE': { type: "", text: "", contentURL: "" },
+			'CHAUSSETTES': { type: "video", text: "de garder «juste au cas où» mon magnétocassette", contentURL: "https://www.youtube.com/watch?v=5hb1McPIIyE" },
+			'TROTINETTE': { type: "", text: "", contentURL: "" },
+			'EPAULETTES': { type: "", text: "", contentURL: "" },
+			'COMÈTE': { type: "", text: "", contentURL: "" },
+			'PAILLETTE': { type: "", text: "", contentURL: "" },
+			'FETE': { type: "", text: "", contentURL: "" }
+		},
+		wordList: {}
+	};
+	
+	CONFIG.wordList = Object.keys(CONFIG.wordDetailMap);
+	
+	module.exports = CONFIG;
+
+/***/ },
+/* 304 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8892,7 +8917,7 @@
 	exports.default = globalEmitter;
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8905,15 +8930,23 @@
 	
 	var _constants = __webpack_require__(302);
 	
-	var _Emitter = __webpack_require__(303);
+	var _config = __webpack_require__(303);
+	
+	var CONFIG = _interopRequireWildcard(_config);
+	
+	var _Emitter = __webpack_require__(304);
 	
 	var _Emitter2 = _interopRequireDefault(_Emitter);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var WORD_DETAIL_MAP = CONFIG.wordDetailMap;
 	
 	var DetailContainer = function () {
 		function DetailContainer() {
@@ -8946,7 +8979,7 @@
 	
 				var textId = btoa(text);
 	
-				this._currentDetail = _constants.WORD_DETAIL_MAP[text];
+				this._currentDetail = WORD_DETAIL_MAP[text];
 	
 				this._videoWrap.style.display = 'none';
 				this._imageWrap.style.display = 'none';

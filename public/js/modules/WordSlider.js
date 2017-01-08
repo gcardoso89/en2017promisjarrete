@@ -1,5 +1,6 @@
 import Text from "./Text";
-import { RESPONSIVE_WIDTH_ARRAY, WORD_LIST, FONT_SIZE_LIST, EVENTS, PIXEL_RATIO } from "../constants";
+import { RESPONSIVE_WIDTH_ARRAY, FONT_SIZE_LIST, EVENTS, PIXEL_RATIO } from "../constants";
+import * as CONFIG from "../config";
 import globalEmitter from "./Emitter";
 
 const TIME_BETWEEN_TEXTS = 100;
@@ -21,6 +22,8 @@ const FONT_SIZE_MAP = (function ( fontSizeList ) {
 })( FONT_SIZE_LIST );
 
 const DELAY_BEFORE_SHOW_DETAIL = 1000;
+
+const WORD_LIST = CONFIG.wordList;
 
 export default class WordSlider {
 

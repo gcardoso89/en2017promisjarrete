@@ -1,5 +1,8 @@
-import { WORD_DETAIL_MAP, EVENTS } from "../constants";
+import { EVENTS } from "../constants";
+import * as CONFIG from "../config";
 import globalEmitter from "./Emitter";
+
+const WORD_DETAIL_MAP = CONFIG.wordDetailMap;
 
 export default class DetailContainer {
 
@@ -15,8 +18,8 @@ export default class DetailContainer {
 		this._image = null;
 
 		globalEmitter.subscribe( EVENTS.RESOLUTION_WINNER, ( e, text ) => this.showContainer( text ) );
-		this._button.addEventListener( 'click', this._onButtonClick.bind(this) );
-		window.addEventListener( 'resize', this._onWindowResize.bind(this) );
+		this._button.addEventListener( 'click', this._onButtonClick.bind( this ) );
+		window.addEventListener( 'resize', this._onWindowResize.bind( this ) );
 
 		this._onWindowResize();
 	}
@@ -52,7 +55,8 @@ export default class DetailContainer {
 				throw( `::DetailContainer:: Invalid type check from word ${text}` );
 		}
 
-		history.pushState(textId, document.title, `/${textId}`);
+		history.pushState( textId, document.title, `/${textId}` );
+		
 	}
 
 	static getYoutubeURL( url ) {
@@ -65,7 +69,7 @@ export default class DetailContainer {
 		return null;
 	}
 
-	_onWindowResize( e ){
+	_onWindowResize( e ) {
 		let winHeight = window.innerHeight;
 		let winWidth = window.innerWidth;
 		let maxHeight = winHeight * 0.3;
@@ -75,31 +79,31 @@ export default class DetailContainer {
 		this._videoWrap.style.height = maxHeight + 'px';
 	}
 
-	async _onButtonClick( e ){
+	async _onButtonClick( e ) {
 		e.preventDefault();
 
-		if ( this._videoPlayer ){
+		if ( this._videoPlayer ) {
 			this._videoPlayer.stopVideo();
 			this._videoPlayer = null;
 			this._videoWrap.innerHTML = "";
 		}
 
-		if ( this._image ){
+		if ( this._image ) {
 			this._image = null;
 			this._imageWrap.innerHTML = "";
 		}
-		history.pushState("", document.title, `/`);
+		history.pushState( "", document.title, `/` );
 
 		await this._slideOutContainer();
 
 		globalEmitter.invoke( EVENTS.PLAY_WORD_SLIDER );
 	}
 
-	_insertText(){
+	_insertText() {
 		this._textContainer.innerText = this._currentDetail.text;
 	}
 
-	async _loadImageContainer(){
+	async _loadImageContainer() {
 		await new Promise( ( resolve ) => {
 			this._image = new Image();
 			this._image.src = this._currentDetail.contentURL;
@@ -108,7 +112,7 @@ export default class DetailContainer {
 
 		this._imageWrap.style.display = 'block';
 		this._imageWrap.appendChild( this._image );
-		
+
 		await this._slideInContainer();
 	}
 
@@ -127,7 +131,7 @@ export default class DetailContainer {
 		this._videoPlayer.playVideo();
 	}
 
-	_createVideoInstance(){
+	_createVideoInstance() {
 		return new Promise( ( resolve ) => {
 			let newVideoWrap = document.createElement( 'div' );
 			newVideoWrap.id = this._mediaContainerId;
