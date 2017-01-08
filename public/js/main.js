@@ -1,5 +1,5 @@
 import WordSlider from "./modules/WordSlider";
-import { PIXEL_RATIO, CANVAS_DIMENSIONS, EVENTS } from "./constants";
+import { PIXEL_RATIO, CANVAS_DIMENSIONS, EVENTS, COLOURS } from "./constants";
 import DetailContainer from "./modules/DetailContainer";
 import globalEmitter from "./modules/Emitter";
 

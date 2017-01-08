@@ -7,16 +7,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 <body>
-<header class="{{classColorName}}">
+<header class="{{classColorName}}" data-color>
 	<div class="wrap clearfix">
-		<h1 class="{{classColorName}}">En 2017 promis j’arrête...</h1>
+		<h1 class="{{classColorName}}" data-color>En 2017 promis j’arrête...</h1>
 		<a href="http://4aout.fr/" target="_blank" class="ic-logo logo"></a>
 	</div>
 </header>
-<main class="{{classColorName}}">
+<main class="{{classColorName}}" data-color>
 	<canvas id="word-slider"></canvas>
 	<div class="button-area">
-		<button class="{{classColorName}}" id="stop-slider">stop ?</button>
+		<button class="{{classColorName}}" data-color id="stop-slider">stop ?</button>
 	</div>
 	<div class="detail-container">
 		<div class="wrap">
@@ -25,12 +25,16 @@
 			<div class="image-wrap" id="image-wrap"></div>
 		</div>
 		<div class="button-container">
-			<button class="{{classColorName}}" id="detail-button">EN FAIT NON, UNE AUTRE !</button>
+			<button class="{{classColorName}}" data-color id="detail-button">EN FAIT NON, UNE AUTRE !</button>
 		</div>
 	</div>
 </main>
 <script type="text/javascript">
-	const SELECT_PHRASE = atob("{{{phrase}}}");
+	//Uhhh, you hacker.
+	var SELECT_PHRASE = "";
+	try {
+		SELECT_PHRASE = atob( decodeURIComponent("{{{phrase}}}") );
+	} catch ( e ) { }
 </script>
 <script type="text/javascript" src="/js/app.js"></script>
 </body>

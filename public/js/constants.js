@@ -57,3 +57,5 @@ export const EVENTS = {
 	PLAY_WORD_SLIDER: 'PLAY_WORD_SLIDER'
 };
 
+export const COLOURS = [ 'color-red', 'color-yellow', 'color-blue', 'color-pink', 'color-green' ];
+

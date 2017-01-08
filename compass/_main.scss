@@ -29,6 +29,7 @@ header {
 	@include box-sizing(border-box);
 	@include transition(color 1s ease-in-out);
 	color: white;
+	padding: 22px 22px 0 22px;
 
 	.wrap {
 		padding: em(24);
@@ -50,7 +51,6 @@ header {
 		border-bottom: em(5, 33) solid white;
 		@include transition(border-color 1s ease-in-out);
 	}
-
 }
 
 main {
@@ -61,7 +61,7 @@ main {
 	top: 0;
 	overflow: hidden;
 	z-index: 1;
-	border: 1px solid white;
+	border: 22px solid white;
 	@media all and (min-width: 481px){
 		min-height: 630px;
 	}

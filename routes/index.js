@@ -14,7 +14,8 @@ router.get( '/', function ( req, res, next ) {
 } );
 
 router.get( '/:phrase', function ( req, res, next ) {
- 	res.render( 'index', { classColorName: 'color-' + generateNewColor(), layout: null, phrase: req.params.phrase } );
+	var phrase = encodeURIComponent( req.params.phrase );
+ 	res.render( 'index', { classColorName: 'color-' + generateNewColor(), layout: null, phrase: phrase } );
 } );
 
 module.exports = router;

@@ -39,6 +39,7 @@ app.use( function ( req, res, next ) {
 // will print stacktrace
 if ( isDevEnv ) {
 	app.use( function ( err, req, res, next ) {
+		//res.redirect( "/" );
 		res.status( err.status || 500 );
 		res.render( 'error', {
 			message: err.message,
@@ -50,6 +51,7 @@ if ( isDevEnv ) {
 // production error handler
 // no stacktraces leaked to user
 app.use( function ( err, req, res, next ) {
+	//res.redirect( "/" );
 	res.status( err.status || 500 );
 	res.render( 'error', {
 		message: err.message,

@@ -8782,6 +8782,8 @@
 		RESOLUTION_WINNER: 'RESOLUTION_WINNER', //arg1: text {string}
 		PLAY_WORD_SLIDER: 'PLAY_WORD_SLIDER'
 	};
+	
+	var COLOURS = exports.COLOURS = ['color-red', 'color-yellow', 'color-blue', 'color-pink', 'color-green'];
 
 /***/ },
 /* 303 */
