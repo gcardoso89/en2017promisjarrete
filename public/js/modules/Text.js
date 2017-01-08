@@ -31,7 +31,7 @@ export default class Text {
 
 		this._offsetX = ( this._textWidth / 2 );
 		this._offsetY = CANVAS_DIMENSIONS.height / 2;
-
+		this._isPaused = false;
 		this._isActive = false;
 		this._opacity = new Property( { start: 0.5, duration: this._options.animDuration } );
 		this._scale = new Property( { start: 0.9, duration: this._options.animDuration } );
@@ -42,15 +42,30 @@ export default class Text {
 		this._opacity.start();
 		this._scale.start();
 		this._startTime = null;
+		this._currentTime = 0;
+		this._isPaused = false;
+	}
+
+	pause() {
+		this._isPaused = true;
+	}
+
+	resume() {
+		this._isPaused = false;
+	}
+
+	stop() {
+		this._isActive = false;
+		this._currentTime = this._currentDuration;
+		this._isPaused = false;
 	}
 
 	update( timeDelta, timestamp ) {
-		if ( this._isActive ) {
+		if ( this._isActive && !this._isPaused ) {
 			this._startTime = this._startTime || timestamp;
 			this._currentTime += timeDelta;
 			if ( this._currentTime >= this._currentDuration ) {
-				this._isActive = false;
-				this._currentTime = 0;
+				this._currentTime = this._currentDuration;
 			}
 			this._opacity.update( timeDelta, timestamp );
 			this._scale.update( timeDelta, timestamp );
@@ -59,21 +74,16 @@ export default class Text {
 	}
 
 	draw( ctx ) {
-		if ( this._isActive ) {
-			let scale = this._scale.getCurrentValue();
-			this._ctx.save();
-			this._ctx.clearRect( 0, this._offsetY - ( this._currentFontSize * 1.2 ) / 2, this._canvas.width, this._currentFontSize * 1.2 );
-			//this._ctx.font = `${50 * scale}px ArialBlack`;
-			this._ctx.translate( this._offsetX, this._offsetY );
-			this._ctx.scale( scale, scale );
-			//this._ctx.globalAlpha = this._opacity.getCurrentValue();
-			this._ctx.fillText( this._text, 0, 0 );
-			this._ctx.restore();
-			ctx.drawImage( this._canvas, 0, 0, this._canvas.width, this._canvas.height );
-		}
+		this._ctx.save();
+		this._ctx.clearRect( 0, this._offsetY - ( this._currentFontSize * 1.2 ) / 2, this._canvas.width, this._currentFontSize * 1.2 );
+		this._ctx.translate( this._offsetX, this._offsetY );
+		this._ctx.fillText( this._text, 0, 0 );
+		this._ctx.restore();
+		ctx.drawImage( this._canvas, 0, 0, this._canvas.width, this._canvas.height );
 	}
 
-	setFontSize ( fontSize ){
+
+	setFontSize( fontSize ) {
 		this._currentFontSize = fontSize;
 		this._ctx.font = this._getCurrentFontExpression();
 		this._ctx.clearRect( 0, 0, this._canvas.width, this._canvas.height );
@@ -83,6 +93,10 @@ export default class Text {
 		this._currentDuration = duration;
 		this._opacity.setDuration( duration );
 		this._scale.setDuration( duration );
+	}
+
+	isActive() {
+		return this._isActive;
 	}
 
 	_getCurrentFontExpression() {

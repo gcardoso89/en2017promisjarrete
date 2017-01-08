@@ -1,15 +1,15 @@
 import Text from "./Text";
-import { RESPONSIVE_WIDTH_ARRAY, WORD_LIST } from "../constants";
+import { RESPONSIVE_WIDTH_ARRAY, WORD_LIST, FONT_SIZE_LIST, EVENTS, PIXEL_RATIO } from "../constants";
+import globalEmitter from "./Emitter";
 
 const TIME_BETWEEN_TEXTS = 100;
-const OVERLAP_TIME_TEXTS = 20;
+const OVERLAP_TIME_TEXTS = 0;
 
-const DELAY_DURATION = 6000;
+const DELAY_DURATION = 6435;
 const FINAL_SPEED = 1000;
 const DECREASE_SPEED = 1.1;
-const FONT_SIZE_LIST = [ 138, 112, 88, 88, 56, 56 ];
 
-const FONT_SiZE_MAP = (function ( fontSizeList ) {
+const FONT_SIZE_MAP = (function ( fontSizeList ) {
 	let map = {};
 
 	for ( let i = 0; i < RESPONSIVE_WIDTH_ARRAY.length; i++ ) {
@@ -19,6 +19,8 @@ const FONT_SiZE_MAP = (function ( fontSizeList ) {
 
 	return map;
 })( FONT_SIZE_LIST );
+
+const DELAY_BEFORE_SHOW_DETAIL = 1000;
 
 export default class WordSlider {
 
@@ -30,7 +32,7 @@ export default class WordSlider {
 		this._currentSpeed = TIME_BETWEEN_TEXTS;
 		this._startDecreasingSpeed = null;
 		this._currentTimeStamp = null;
-		this._currentFontSize = FONT_SIZE_LIST[ 0 ];
+		this._currentFontSize = null;
 		this._textArr = WordSlider.createTextArray();
 		this._button = document.getElementById( 'stop-slider' );
 		this._win = window;
@@ -45,6 +47,8 @@ export default class WordSlider {
 			}
 			this._resizeHandlerTimeout = setTimeout( this._handleResize.bind( this ), 500 );
 		} );
+
+		globalEmitter.subscribe( EVENTS.PLAY_WORD_SLIDER, () => this.start() );
 	}
 
 	_stopSlider( e ) {
@@ -52,18 +56,21 @@ export default class WordSlider {
 		if ( !this._startDecreasingSpeed ) {
 			this._startDecreasingSpeed = this._currentTimeStamp;
 		}
+		if ( this._button.className.indexOf( " inactive" ) === -1 ){
+			this._button.className += " inactive";
+		}
 	}
 
 	_handleResize() {
 		let newFontSize;
 		this._currentWidth = this._win.innerWidth;
 		if ( this._currentWidth >= RESPONSIVE_WIDTH_ARRAY[ 0 ] ) {
-			newFontSize = RESPONSIVE_WIDTH_ARRAY[ 0 ];
+			newFontSize = FONT_SIZE_MAP[ RESPONSIVE_WIDTH_ARRAY[ 0 ] ];
 		} else {
 			for ( let i = 0; i < RESPONSIVE_WIDTH_ARRAY.length; i++ ) {
 				if ( this._currentWidth < RESPONSIVE_WIDTH_ARRAY[ i ] ) {
 					let indNormalized = ( ( i + 1 ) === RESPONSIVE_WIDTH_ARRAY.length ) ? i : ( i + 1 );
-					newFontSize = FONT_SiZE_MAP[ RESPONSIVE_WIDTH_ARRAY[ indNormalized ] ];
+					newFontSize = FONT_SIZE_MAP[ RESPONSIVE_WIDTH_ARRAY[ indNormalized ] ];
 				}
 			}
 		}
@@ -72,7 +79,6 @@ export default class WordSlider {
 			this._currentFontSize = newFontSize;
 			this.changeFontSize();
 		}
-
 	}
 
 	start() {
@@ -82,7 +88,9 @@ export default class WordSlider {
 		this._currentText = 0;
 		this._currentTime = 0;
 		this._currentSpeed = TIME_BETWEEN_TEXTS;
+		this._button.className = this._button.className.replace(" inactive", "");
 		for ( let i = 0; i < this._textArr.length; i++ ) {
+			this._textArr[ i ].stop();
 			this._textArr[ i ].setDuration( this._currentSpeed + OVERLAP_TIME_TEXTS );
 		}
 		this._textArr[ this._currentText ].start();
@@ -90,8 +98,10 @@ export default class WordSlider {
 
 	update( timeDelta, timestamp ) {
 		if ( this._isActive ) {
+
 			if ( this._currentTime >= this._currentSpeed ) {
 				this._currentTime = 0;
+				this._textArr[ this._currentText ].stop();
 				this._currentText = ( this._currentText + 1 === WORD_LIST.length ? 0 : this._currentText + 1 );
 				this._textArr[ this._currentText ].start();
 			}
@@ -113,17 +123,19 @@ export default class WordSlider {
 			if ( this._startDecreasingSpeed && timestamp - this._startDecreasingSpeed > DELAY_DURATION ) {
 				this._startDecreasingSpeed = false;
 				this._isActive = false;
-				alert( this._textArr[ this._currentText ]._text );
-				this.start();
+				setTimeout( () => globalEmitter.invoke( EVENTS.RESOLUTION_WINNER, this._textArr[ this._currentText ]._text ), DELAY_BEFORE_SHOW_DETAIL );
 			}
 
 		}
 		this._currentTimeStamp = timestamp;
 	}
 
-	draw( ctx ) {
+	draw( ctx, canvas ) {
 		for ( let i = 0; i < this._textArr.length; i++ ) {
-			this._textArr[ i ].draw( ctx );
+			let currentText = this._textArr[ i ];
+			if ( currentText.isActive() ){
+				currentText.draw( ctx, canvas );
+			}
 		}
 	}
 

@@ -1,6 +1,6 @@
 @import "variables";
 
-@mixin colours( $property, $includeDefaultColour ){
+@mixin colours( $property, $includeDefaultColour:false ){
 	@if ( $includeDefaultColour ){
 		background: $default-color;
 	}
