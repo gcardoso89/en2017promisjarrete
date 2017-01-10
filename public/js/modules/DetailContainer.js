@@ -106,7 +106,7 @@ export default class DetailContainer {
 	async _loadImageContainer() {
 		await new Promise( ( resolve ) => {
 			this._image = new Image();
-			this._image.src = this._currentDetail.contentURL;
+			this._image.src = '/images/' + this._currentDetail.contentURL;
 			this._image.onload = resolve;
 		} );
 

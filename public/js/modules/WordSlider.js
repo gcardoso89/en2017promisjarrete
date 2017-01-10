@@ -6,9 +6,9 @@ import globalEmitter from "./Emitter";
 const TIME_BETWEEN_TEXTS = 100;
 const OVERLAP_TIME_TEXTS = 0;
 
-const DELAY_DURATION = 6435;
+const DELAY_DURATION = 8435;
 const FINAL_SPEED = 1000;
-const DECREASE_SPEED = 1.1;
+const DECREASE_SPEED = 1.5;
 
 const FONT_SIZE_MAP = (function ( fontSizeList ) {
 	let map = {};
