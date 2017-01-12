@@ -9289,11 +9289,11 @@
 	
 		_createClass(SocialLinks, [{
 			key: "_setTwitterLink",
-			value: function _setTwitterLink(receiver) {
+			value: function _setTwitterLink() {
 				var baseUrl = 'https://twitter.com/intent/tweet';
 				var shareUrl = encodeURIComponent(this._shareUrl);
 				baseUrl += '?url=' + shareUrl;
-				baseUrl += "&text=" + encodeURIComponent("Voici un petit message de ma part pour " + receiver + " - " + receiver + " > ");
+				baseUrl += "&text=" + encodeURIComponent("Enfin une bonne idée pour de bonnes résolutions de début d’année. À tester sans tarder ! Merci @4aout");
 	
 				this._twitter.addEventListener('click', function (e) {
 					e.preventDefault();
@@ -9322,8 +9322,8 @@
 		}, {
 			key: "_setMailLink",
 			value: function _setMailLink() {
-				var subject = '';
-				var bodyText = '';
+				var subject = encodeURIComponent('En 2017, promis j’arrête…');
+				var bodyText = encodeURIComponent('Enfin une bonne idée pour de bonnes résolutions de début d’année. À tester sans tarder !');
 				this._mail.setAttribute('href', 'mailto:?subject=' + subject + '&body=' + bodyText);
 			}
 		}, {
