@@ -71,7 +71,6 @@ export default class DetailContainer {
 
 	_onWindowResize( e ) {
 		let winHeight = window.innerHeight;
-		let winWidth = window.innerWidth;
 		let maxHeight = winHeight * 0.3;
 		let finalWidth = maxHeight * 16 / 9;
 
