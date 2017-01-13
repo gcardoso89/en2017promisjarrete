@@ -9281,9 +9281,24 @@
 			this._twitter = document.getElementById('social-twitter');
 			this._facebook = document.getElementById('social-facebook');
 			this._mail = document.getElementById('social-mail');
+			this._credits = document.getElementById('credits-link');
+			this._creditsText = document.getElementById('credits-text');
+			this._creditsTextLink = document.getElementById('credits-text-link');
 	
 			_Emitter2.default.subscribe(_constants.EVENTS.SET_SOCIAL_LINKS, function (e, word) {
 				return _this._setSocialLinks(btoa(word));
+			});
+	
+			this._credits.addEventListener('click', function (e) {
+				e.preventDefault();
+				_this._creditsText.style.display = 'inline-block';
+				_this._credits.style.display = 'none';
+			});
+	
+			this._creditsTextLink.addEventListener('click', function (e) {
+				e.preventDefault();
+				_this._creditsText.style.display = 'none';
+				_this._credits.style.display = 'inline-block';
 			});
 		}
 	

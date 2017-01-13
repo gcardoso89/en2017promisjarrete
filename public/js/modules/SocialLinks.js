@@ -9,8 +9,23 @@ export default class SocialLinks {
 		this._twitter = document.getElementById( 'social-twitter' );
 		this._facebook = document.getElementById( 'social-facebook' );
 		this._mail = document.getElementById( 'social-mail' );
+		this._credits = document.getElementById( 'credits-link' );
+		this._creditsText = document.getElementById( 'credits-text' );
+		this._creditsTextLink = document.getElementById( 'credits-text-link' );
 
 		globalEmitter.subscribe( EVENTS.SET_SOCIAL_LINKS, ( e, word ) => this._setSocialLinks( btoa( word ) ) );
+
+		this._credits.addEventListener( 'click', (e) => { 
+			e.preventDefault();
+			this._creditsText.style.display = 'inline-block';
+			this._credits.style.display = 'none';
+		} );
+		
+		this._creditsTextLink.addEventListener( 'click', (e) => { 
+			e.preventDefault();
+			this._creditsText.style.display = 'none';
+			this._credits.style.display = 'inline-block';
+		} );
 	}
 
 	_setTwitterLink() {
@@ -19,7 +34,7 @@ export default class SocialLinks {
 		baseUrl += '?url=' + shareUrl;
 		baseUrl += "&text=" + encodeURIComponent( "Enfin une bonne idée pour de bonnes résolutions de début d’année. À tester sans tarder ! Merci @4aout" );
 
-		this._twitter.addEventListener( 'click', (e ) => {
+		this._twitter.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
 			let width = 575,
 				height = 400,
