@@ -56,7 +56,7 @@ export default class DetailContainer {
 		}
 
 		history.pushState( textId, document.title, `/${textId}` );
-		
+
 	}
 
 	static getYoutubeURL( url ) {
@@ -173,7 +173,7 @@ export default class DetailContainer {
 		tag.src = "https://www.youtube.com/iframe_api";
 		var firstScriptTag = document.getElementsByTagName( 'script' )[ 0 ];
 		firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
-		window.onYouTubeIframeAPIReady = resolve;
+		window[ 'onYouTubeIframeAPIReady' ] = resolve;
 	}
 
 }
