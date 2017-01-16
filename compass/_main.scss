@@ -193,7 +193,7 @@ footer {
 	height: 40px;
 	left: 0;
 	bottom: 0;
-	z-index: 3;
+	z-index: 2;
 	@include box-sizing(border-box);
 	font-size: em(14);
 	.wrap {
