@@ -95,8 +95,15 @@
 	})( window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga' );
 
 	ga( 'create', 'UA-90016743-1', 'auto' );
-	ga( 'send', 'pageview' );
 
+	{{#if phrase}}
+	ga('send', {
+		hitType: 'pageview',
+		page: "/" + SELECT_PHRASE
+	});
+	{{else}}
+	ga( 'send', 'pageview' );
+	{{/if}}
 </script>
 <script type="text/javascript" src="/js/app.js"></script>
 </body>

@@ -24,7 +24,13 @@ import SocialLinks from "./modules/SocialLinks";
 			this._socialLinks = new SocialLinks();
 			this._tick( 0 );
 
-			globalEmitter.subscribe( EVENTS.RESOLUTION_WINNER, ( e, word ) => globalEmitter.invoke( EVENTS.SET_SOCIAL_LINKS, word ) )
+			globalEmitter.subscribe( EVENTS.RESOLUTION_WINNER, ( e, word ) => {
+				ga('send', {
+					hitType: 'pageview',
+					page: "/" + word
+				});
+				globalEmitter.invoke( EVENTS.SET_SOCIAL_LINKS, word )
+			} );
 			this._start();
 		};
 
