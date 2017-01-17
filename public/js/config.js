@@ -13,7 +13,7 @@ var CONFIG = {
 		"SERRE-TÊTE": { type: "image", text: "de soutenir à ma mère que « oui, oui, c’est très 2017 les serre-tête ».", contentURL: "3-SERRE-TETE.gif" },
 		"BILLE EN TÊTE": { type: "image", text: "quel que soit le contexte de foncer bille en tête.", contentURL: "4-BILLE EN TETE.gif" },
 		"CAFÈT": { type: "image", text: "de reprendre (juste un peu) des frites à la cafèt.", contentURL: "5-CAFET.gif" },
-		"BAGUETTE": { type: "image", text: "de laisser mon boss me mener à la baguette.", contentURL: "6-BAGUETTE.jpg" },
+		"BAGUETTE": { type: "image", text: "de laisser mon boss me mener à la baguette.", contentURL: "6-BAGUETTE.gif" },
 		"PÈTE": { type: "image", text: "de dire « c’est pas moi » quand je pète.", contentURL: "7-PETE.gif" },
 		"COUETTE": { type: "image", text: "de passer mon dimanche sous la couette.", contentURL: "8-COUETTE.gif" },
 		"TARTIFLETTE": { type: "image", text: "de passer l’hiver entre raclettes et tartiflettes.", contentURL: "9-RACLETTE_TARTIFLETTE.gif" },
