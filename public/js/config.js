@@ -32,7 +32,7 @@ var CONFIG = {
 		"DISQUETTE": { type: "image", text: "de dire « quand je pense que de mon temps on stockait tout sur des disquettes ».", contentURL: "22-DISQUETTE.png" },
 		"GOURMETTE": { type: "video", text: "VRAIMENT de porter une gourmette.", contentURL: "https://www.youtube.com/watch?v=0KS6tvDcCAw" },
 		"CASSETTE": { type: "video", text: "de garder, juste au cas où, mon magnétocassette.", contentURL: "https://www.youtube.com/watch?v=5hb1McPIIyE" },
-		"OUBLIETTES": { type: "image", text: "de fureter toute la journée sur le Facebook de son son ex : AUX OUBLIETTES !", contentURL: "25-OUBLIETTES.gif" },
+		"OUBLIETTES": { type: "image", text: "de fureter toute la journée sur le Facebook de son ex : AUX OUBLIETTES !", contentURL: "25-OUBLIETTES.gif" },
 		"POMPETTE": { type: "image", text: "de dire « mais non, je ne suis pas bouré(e), juste un peu pompette ».", contentURL: "26-POMPETTE.gif" },
 		"CHAUSSETTES": { type: "image", text: "de faire l’amour en chaussettes.", contentURL: "27-CHAUSSETTES.gif" },
 		"TROTINETTE": { type: "image", text: "de trouver stylés les déplacements en trottinette.", contentURL: "28-TROTINETTE.gif" },

@@ -20,12 +20,6 @@ export default class SocialLinks {
 			this._creditsText.style.display = 'inline-block';
 			this._credits.style.display = 'none';
 		} );
-		
-		this._creditsTextLink.addEventListener( 'click', (e) => { 
-			e.preventDefault();
-			this._creditsText.style.display = 'none';
-			this._credits.style.display = 'inline-block';
-		} );
 	}
 
 	_setTwitterLink() {
