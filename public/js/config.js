@@ -40,7 +40,7 @@ var CONFIG = {
 		"COMÈTE": { type: "image", text: "de faire des plans sur la comète.", contentURL: "30-COMETE.gif" },
 		"MAUVIETTE": { type: "video", text: "de me laisser traiter de mauviette.", contentURL: "https://www.youtube.com/watch?v=yydjQ6rYfBQ" },
 		"PAILLETTE": { type: "image", text: "d’essayer de faire valider pour la 1 000ᵉ fois le motif «  paillette ».", contentURL: "32-PAILLETTE.gif" },
-		"BRAGUETTE": { type: "video", text: "de ne plus devenir rouge écarlate après un « psssst, ta braguette… !».", contentURL: "https://www.youtube.com/watch?v=kOxxBToExWo" },
+		"BRAGUETTE": { type: "video", text: "de ne plus devenir rouge écarlate après un « psssst, ta braguette… !».", contentURL: "https://www.youtube.com/watch?v=Com-xQ85THE" },
 		"FÊTE": { type: "image", text: "d’arriver « discrètement » après un lendemain de fête.", contentURL: "34-FETE.gif" },
 		"CONNECT": { type: "image", text: "d’espérer que tout le monde connaisse « FRANCE CONNECT ».", contentURL: "35-FRANCE_CONNECT.gif" },
 		"KOPECK": { type: "image", text: "de penser que les pains au chocolat ne valent pas un kopeck.", contentURL: "36-KOPECK.gif" },

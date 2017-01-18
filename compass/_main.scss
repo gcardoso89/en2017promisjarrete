@@ -169,13 +169,16 @@ button {
 	text-transform: uppercase;
 	color: white;
 	white-space: nowrap;
-	@include transition(border 0.3s ease-in-out, color 0.3s ease-in-out);
+	@include transition(border 0.3s ease-in-out, color 0.3s ease-in-out, opacity 0.3s ease-in-out);
 	&:focus {
 		outline: 0;
 	}
 	&:hover, &.inactive {
 		@include colours(color);
 		background: #fff;
+	}
+	&.inactive {
+		@include opacity( 0.3 );
 	}
 
 	&.inactive {
